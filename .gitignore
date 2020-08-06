@@ -154,4 +154,6 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+playground/
+
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,linux
