@@ -9,7 +9,7 @@ if (argv.address) {
       return console.error(err)
     }
   
-    forecast(data.latitude, data.longitude, (err, forecastData) => {
+    forecast(data, (err, forecastData) => {
       if (err) {
         return console.error(err)
       }
