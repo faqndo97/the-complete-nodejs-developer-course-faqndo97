@@ -1,5 +1,7 @@
 const express = require('express')
 const path = require('path')
+const hbs = require('hbs')
+const { send } = require('process')
 
 // express is mainly a function, and we need start it
 const app = express()
@@ -9,6 +11,14 @@ const app = express()
 // views.
 app.set('view engine', 'hbs')
 
+// Store views in a different folder with a custom name
+const viewsPath = path.join(__dirname, '../templates/views')
+app.set('views', viewsPath)
+
+// Tell to hbs where to lookup by the partials
+const partialsPath = path.join(__dirname, '../templates/partials')
+hbs.registerPartials(partialsPath)
+
 // Load static files
 const staticFolder = path.join(__dirname, '../public')
 app.use(express.static(staticFolder))
@@ -17,19 +27,21 @@ app.use(express.static(staticFolder))
 app.get('', (req, res, next) => {
   res.render('index', {
     title: 'Weather app',
-    name: 'Facundo Espinosa'
+    authorName: 'Facundo Espinosa'
   })
 })
 
 app.get('/about', (req, res, next) => {
   res.render('about', {
-    title: 'About'
+    title: 'About',
+    authorName: 'Facundo espinosa'
   })
 })
 
 app.get('/help', (req, res, next) => {
   res.render('help', {
-    title: 'Help title'
+    title: 'Help title',
+    authorName: 'Facundo Espinosa'
   })
 })
 
@@ -37,6 +49,22 @@ app.get('/weather', (req, res, next) => {
   res.send({
     forecast: 'It is snowing',
     location: 'Philadelphia'
+  })
+})
+
+app.get('/help/*', (req, res, next) => {
+  res.render('404', {
+    title: '404 Title',
+    message: 'Help article not found',
+    authorName: 'Facundo Espinosa'
+  })
+})
+
+app.get('*', (req, res, next) => {
+  res.render('404', {
+    title: '404 Title',
+    message: 'Page not found',
+    authorName: 'Facundo espinosa'
   })
 })
 
