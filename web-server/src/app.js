@@ -1,21 +1,15 @@
 const express = require('express')
+const path = require('path')
 
 // express is mainly a function, and we need start it
 const app = express()
 
+
+// Load static files
+const staticFolder = path.join(__dirname, '../public')
+app.use(express.static(staticFolder))
+
 // In this way we define routes
-app.get('/', (req, res, next) => {
-  res.send('<h1>Weather</h1>')
-})
-
-app.get('/help', (req, res, next) => {
-  res.send({ hello: 'bye' })
-})
-
-app.get('/about', (req, res, next) => {
-  res.send('<h1>About page</h1>')
-})
-
 app.get('/weather', (req, res, next) => {
   res.send({
     forecast: 'It is snowing',
