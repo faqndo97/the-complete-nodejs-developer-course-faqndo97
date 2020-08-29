@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
 
+require('dotenv').config()
+
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
@@ -94,6 +96,6 @@ app.get('*', (req, res, next) => {
 // And to end we need say to express to listen for incoming request
 // at the port 3000, and it uses the callback pattern that will
 // invoke that function when the server is up and running.
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Server is up')
 })
