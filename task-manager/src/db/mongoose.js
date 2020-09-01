@@ -14,7 +14,12 @@ const User = mongoose.model('User', {
     required: true
   },
   age: {
-    type: Number
+    type: Number,
+    validate(value) {
+      if (value < 0) {
+        throw new Error('Age must be a positive number')
+      }
+    }
   }
 })
 
@@ -39,7 +44,8 @@ const Task = mongoose.model('Task', {
 // })
 
 const me = new User({
-  age: 1
+  name: 'Facundo',
+  age: -1
 })
 
 me.save().then((result) => {
