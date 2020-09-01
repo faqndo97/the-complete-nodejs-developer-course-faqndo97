@@ -12,11 +12,14 @@ mongoose.connect(`${connectionURL}/${database}`, {
 const User = mongoose.model('User', {
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
+    trim: true,
+    lowercase: true,
     validate(value) {
       if (!validator.isEmail(value)) {
         throw new Error('Invalid email')
@@ -25,6 +28,7 @@ const User = mongoose.model('User', {
   },
   age: {
     type: Number,
+    default: 0,
     validate(value) {
       if (value < 0) {
         throw new Error('Age must be a positive number')
@@ -54,9 +58,8 @@ const Task = mongoose.model('Task', {
 // })
 
 const me = new User({
-  name: 'Facundo',
-  email: 'dsfadfsads',
-  age: 23
+  name: '     Facundo   ',
+  email: '     FACU@GMAIL.com',
 })
 
 me.save().then((result) => {
