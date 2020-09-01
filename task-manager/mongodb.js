@@ -31,13 +31,22 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   //   console.error(error)
   // })
   
-  db.collection('tasks').updateMany({
-    completed: false
-  }, {
-    $set: {
-      completed: true
-    }
-  }).then((result) => console.log(result)).catch((error) => error)
+  // db.collection('tasks').updateMany({
+  //   completed: false
+  // }, {
+  //   $set: {
+  //     completed: true
+  //   }
+  // }).then((result) => console.log(result)).catch((error) => error)
+
+  // Delete
+  // db.collection('users').deleteMany()
+  //   .then((result) => console.log(result))
+  //   .catch((error) => console.error(error))
+
+  db.collection('tasks').deleteOne({ _id: new ObjectID('5f4c601b7456d89fbdc8dc42') })
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error))
 })
 
 function commonCallback(error, result) {
