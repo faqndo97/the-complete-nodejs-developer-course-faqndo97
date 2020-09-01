@@ -1,12 +1,7 @@
-const { MongoClient, ObjectId } = require('mongodb')
+const { MongoClient, ObjectID } = require('mongodb')
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const database = 'task-manager'
-
-const id = new ObjectId()
-console.log(id.toHexString().length)
-console.log(id.id.length)
-console.log(id.getTimestamp())
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
   if (error) {
@@ -15,10 +10,22 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   const db = client.db(database)
 
-  // createUser(db)
-  // createUsers(db)
-  // createTasks(db)
+  // Finding practice 
+
+  // db.collection('users').findOne({ _id: new ObjectID('5f4c5f880a2e2f9f73ad8179') }, commonCallback)
+  // db.collection('users').find({ name: 'Facundo' }).toArray(commonCallback)
+  // db.collection('users').find({ name: 'Facundo' }).count(commonCallback)
+  // db.collection('tasks').findOne({ _id: new ObjectID('5f4c601b7456d89fbdc8dc43')}, commonCallback)
+  // db.collection('tasks').find({ completed: true }).toArray(commonCallback)
 })
+
+function commonCallback(error, result) {
+  if (error) {
+    return console.error(error)
+  }
+
+  console.log(result)
+}
 
 function createTasks(db) {
   db.collection('tasks').insertMany([
