@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const database = 'task-manager'
@@ -12,6 +13,15 @@ const User = mongoose.model('User', {
   name: {
     type: String,
     required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error('Invalid email')
+      }
+    }
   },
   age: {
     type: Number,
@@ -45,7 +55,8 @@ const Task = mongoose.model('Task', {
 
 const me = new User({
   name: 'Facundo',
-  age: -1
+  email: 'dsfadfsads',
+  age: 23
 })
 
 me.save().then((result) => {
