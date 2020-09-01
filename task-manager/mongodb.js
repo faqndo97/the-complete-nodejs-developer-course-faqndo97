@@ -17,6 +17,27 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   // db.collection('users').find({ name: 'Facundo' }).count(commonCallback)
   // db.collection('tasks').findOne({ _id: new ObjectID('5f4c601b7456d89fbdc8dc43')}, commonCallback)
   // db.collection('tasks').find({ completed: true }).toArray(commonCallback)
+
+  // Updating
+  // db.collection('users').updateOne({
+  //   _id: new ObjectID('5f4c5f880a2e2f9f73ad8179')
+  // }, {
+  //   $inc: {
+  //     age: 1
+  //   }
+  // }).then((result) => {
+  //   console.log(result)
+  // }).catch((error) => {
+  //   console.error(error)
+  // })
+  
+  db.collection('tasks').updateMany({
+    completed: false
+  }, {
+    $set: {
+      completed: true
+    }
+  }).then((result) => console.log(result)).catch((error) => error)
 })
 
 function commonCallback(error, result) {
