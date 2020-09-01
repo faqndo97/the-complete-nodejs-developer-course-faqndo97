@@ -10,7 +10,8 @@ mongoose.connect(`${connectionURL}/${database}`, {
 
 const User = mongoose.model('User', {
   name: {
-    type: String
+    type: String,
+    required: true
   },
   age: {
     type: Number
@@ -26,24 +27,23 @@ const Task = mongoose.model('Task', {
   }
 })
 
-const newTask = new Task({
-  description: 'I have something to do',
-  completed: false
-})
-
-newTask.save().then((result) => {
-  console.log(result)
-}).catch((error) => {
-  console.error(error)
-})
-
-// const me = new User({
-//   name: 'Facundo',
-//   age: 'adsads'
+// const newTask = new Task({
+//   description: 'I have something to do',
+//   completed: false
 // })
 
-// me.save().then((result) => {
+// newTask.save().then((result) => {
 //   console.log(result)
 // }).catch((error) => {
 //   console.error(error)
 // })
+
+const me = new User({
+  age: 1
+})
+
+me.save().then((result) => {
+  console.log(result)
+}).catch((error) => {
+  console.error(error)
+})
