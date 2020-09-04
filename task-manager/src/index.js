@@ -51,6 +51,37 @@ app.get('/users/:id', async (req, res, next) => {
   }
 })
 
+app.patch('/users/:id', async (req, res, next) => {
+  const _id = req.params.id
+
+  try {
+    const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+
+    if (!user) {
+      res.status(404).send()
+    }
+
+    res.send(user)
+  } catch (error) {
+    res.send(400).send(error)
+  }
+})
+
+app.delete('/users/:id', async (req, res, next) => {
+  const _id = req.params.id
+
+  try {
+    const user = await User.findByIdAndDelete(_id)
+
+    if (!user) {
+      return res.status(404).send()
+    }
+
+    res.send(user)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 // Tasks
 
 app.get('/tasks', async (req, res, next) => {
@@ -91,6 +122,45 @@ app.get('/tasks/:id', async (req, res, next) => {
   }
 })
 
+app.patch('/tasks/:id', async (req, res, next) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['description', 'completed']
+  const isValidOperation =  updates.every((update) => allowedUpdates.includes(update))
+
+  if (!isValidOperation) {
+    return res.status(400).send({error: 'Invalid update'})
+  }
+
+  const _id = req.params.id
+
+  try {
+    const task = await Task.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+
+    if (!task) {
+      res.status(404).send()
+    }
+
+    res.send(task)
+  } catch (error) {
+    res.send(400).send(error)
+  }
+})
+
+app.delete('/tasks/:id', async (req, res, next) => {
+  const _id = req.params.id
+
+  try {
+    const task = await Task.findByIdAndDelete(_id)
+
+    if (!task) {
+      return res.status(404).send()
+    }
+
+    res.send(task)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
 app.listen(port, () => {
   console.log('Server is up!')
